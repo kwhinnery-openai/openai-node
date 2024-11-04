@@ -15,22 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: stainless-api/trigger-release-please@v1
-        id: release
-        with:
-          repo: ${{ github.event.repository.full_name }}
-          stainless-api-key: ${{ secrets.STAINLESS_API_KEY }}
-
       - name: Set up Node
-        if: ${{ steps.release.outputs.releases_created }}
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
       - name: Install dependencies
-        if: ${{ steps.release.outputs.releases_created }}
-        run: |
-          yarn install
+        run: yarn install
 
       - name: Run build
         run: yarn build
